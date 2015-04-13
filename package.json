@@ -1,0 +1,16 @@
+{
+  "name": "Unsplashify",
+  "version": "0.1.0",
+  "description": "Use images from Unsplash on your desktop",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Antun",
+  "license": "BSD",
+  "dependencies": {
+    "wallpaper": "~1.0.0",
+    "request": "~2.55.0",
+    "fs": "0.0.2"
+  }
+}
