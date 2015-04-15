@@ -1,72 +1,91 @@
 // Requires
+var display = require('screen').getPrimaryDisplay();
 var wallpaper = require('wallpaper');
-var fs = require('fs');
 var request = require('request');
+var superb = require('superb');
+var fs = require('fs-extra');
+
 
 // Variables
 var config = {
     online: null,
-    highres: true
+    blur: false,
+    width: display.size.width,
+    height: display.size.height
 };
-
-var i = 0;
 
 
 // Functions
-function downloadWallpaper(method, param) {
-    if(method === 'random') {
-        var link = 'http://www.splashbase.co/api/v1/images/random';
-    } else if(method === 'latest') {
-        var link = 'http://www.splashbase.co/api/v1/images/latest?images_only=true';
-    } else if(method === 'search') {
-        if(!param) {
-            return console.error('Invalid Query');
-        } else {
-            var link = 'http://www.splashbase.co/api/v1/images/search?query=' + param;
+function getList() {
+    $('#loading').show();
+    request('https://unsplash.it/list', function(err, req, body) {
+        $('#loading').hide();
+        body = JSON.parse(body);
+        for(var i = body.length; i >= 0; i--) {
+            if(i === 0) {
+                $(function() {
+                    $('img.lazy').lazyload();
+                });
+
+                $('img.lazy').lazyload({
+                    threshold: 12,
+                    effect: "fadeIn"
+                });
+
+                bindClicks();
+            } else {
+                $('#cards').append('<div class="card col s3"><div class="card-image"><img class="lazy" data-original="http://unsplash.it/480/270?image=' + body[i - 1].id + '" width="480px" height="270px"></div><div class="card-action"><a href="#!"><i data-action="set" data-id="' + body[i - 1].id + '" class="action mdi-action-aspect-ratio"></i></a><a href="#!"><i data-action="add" class="action mdi-content-add-circle-outline"></i></a><a href="#!"><i data-action="fav" class="action mdi-action-favorite-outline"></i></a></div></div>');
+            }
         }
-    } else {
-        return console.error('Invalid Method');
+    });
+}
+
+function downloadWallpaper(method, options) {
+    var id = options.id || (Math.random() + 1).toString(36).substr(2, 10);
+    var size = config.width + '/' + config.height;
+    var path = __dirname + '/dl/' + id;
+    var base = 'https://unsplash.it/';
+
+    if(options && options.grayscale === true) {
+        base += 'g/';
+        path += '-grey';
     }
 
-    var path = __dirname + '/dl/' + method + i;
+    if(method === 'random') {
+        var link = base + size + '/?random';
+    } else if(method === 'specific') {
+        var link = base + size + '?image=' + options.id;
+    } else {
+        return console.error('Invalid method');
+    }
 
-    request(link, function(err, res, body) {
-        if(method === 'latest' || method === 'search') {
-            parsed = JSON.parse(body).images[0];
+    if(options && options.blur === true) {
+        link += '&blur';
+        path += '-blur';
+    }
+
+    fs.exists(path, function(exists) {
+        if(exists === true) {
+            setWallpaper(path);
         } else {
-            parsed = JSON.parse(body);
-        }
-
-        if(config.highres === true) {
-            link = parsed.large_url || parsed.url;
-        } else {
-            link = parsed.url;
-        }
-
-        request(link)
-            .pipe(fs.createWriteStream(path))
-            .on('response', function(response) {
-                console.log(response.statusCode)
-                console.log(response.headers['content-type'])
-            })
+            request(link)
+            .pipe(fs.createOutputStream(path)
+                .on('finish', function() {
+                    setWallpaper(path);
+                }))
             .on('error', function(err) {
-                console.error(err)
-            })
-            .on('close', function() {
-                setWallpaper(path)
+                console.error(err);
             });
-
-        console.log('Downloading...');
-        i++;
+        }
     });
 }
 
 function setWallpaper(path) {
     wallpaper.set(path, function(err) {
         if(!err) {
-            console.log('Success');
+            return console.log('Success');
         } else {
-            console.error(err);
+            return console.error(err);
         }
     })
 }
@@ -89,7 +108,27 @@ function checkConnection() {
 };
 
 
+// Binds
+function bindClicks() {
+    $('.action').on('click', function() {
+        switch($(this).data('action')) {
+            case 'set':
+                downloadWallpaper('specific', {id:$(this).data('id')});
+                break;
+            case 'add':
+                console.log('add');
+                break;
+            case 'fav':
+                console.log('fav');
+                break;
+        }
+    })
+}
+
+
 // Intern
-window.addEventListener('online',  checkConnection);
+document.getElementById('subtitle').innerHTML = ' | ' + superb() + ' wallpapers';
 window.addEventListener('offline',  checkConnection);
+window.addEventListener('online',  checkConnection);
 checkConnection();
+getList();

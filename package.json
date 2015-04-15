@@ -11,6 +11,7 @@
   "dependencies": {
     "wallpaper": "~1.0.0",
     "request": "~2.55.0",
-    "fs": "0.0.2"
+    "fs": "0.0.2",
+    "fs-extra": "~0.18.0"
   }
 }

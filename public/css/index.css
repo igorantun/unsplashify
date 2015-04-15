@@ -1,0 +1,55 @@
+#subtitle {
+    -webkit-user-select: none;
+    font-weight: normal;
+    font-size: 10pt;
+    cursor: default;
+}
+
+.title {
+    font-size: 20pt!important;
+    -webkit-user-select: none;
+    margin-left: 15px;
+    cursor: default;
+}
+
+.icon {
+    font-size: 18pt!important;
+}
+
+.action {
+    color: black;
+    margin-left: 5px;
+}
+
+.row .col {
+    padding: 0 0.45rem;
+}
+
+.row .col.s3 {
+    width: 24%;
+}
+
+#cards {
+    margin-left: 0.55%;
+    margin-top: 10px;
+}
+
+.card {
+    margin: 0.5rem 0.5rem 0.01rem 0;
+}
+
+.card .card-action {
+    padding: 10px;
+}
+
+.card .card-image {
+    margin-top: 7.5px;
+}
+
+.card .card-image img {
+    height: 100%;
+}
+
+#loading {
+    display: none;
+}
