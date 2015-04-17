@@ -1,125 +1,68 @@
 // Requires
 var display = require('screen').getPrimaryDisplay();
-var wallpaper = require('wallpaper');
-var request = require('request');
 var superb = require('superb');
-var fs = require('fs-extra');
+
+var package = require('./package.json');
+var wallpaper = require('./lib/wallpaper.js');
+var schedule = require('./lib/schedule.js');
+var utils = require('./lib/utils.js');
 
 
 // Variables
 var config = {
-    online: null,
-    blur: false,
+    version: package.version,
     width: display.size.width,
-    height: display.size.height
+    height: display.size.height,
+    online: null
 };
 
-
-// Functions
-function getList() {
-    $('#loading').show();
-    request('https://unsplash.it/list', function(err, req, body) {
-        $('#loading').hide();
-        body = JSON.parse(body);
-        for(var i = body.length; i >= 0; i--) {
-            if(i === 0) {
-                $(function() {
-                    $('img.lazy').lazyload();
-                });
-
-                $('img.lazy').lazyload({
-                    threshold: 12,
-                    effect: "fadeIn"
-                });
-
-                bindClicks();
-            } else {
-                $('#cards').append('<div class="card col s3"><div class="card-image"><img class="lazy" data-original="http://unsplash.it/480/270?image=' + body[i - 1].id + '" width="480px" height="270px"></div><div class="card-action"><a href="#!"><i data-action="set" data-id="' + body[i - 1].id + '" class="action mdi-action-aspect-ratio"></i></a><a href="#!"><i data-action="add" class="action mdi-content-add-circle-outline"></i></a><a href="#!"><i data-action="fav" class="action mdi-action-favorite-outline"></i></a></div></div>');
-            }
-        }
-    });
+var user = {
+    name: null,
+    timer: null,
+    favorites: [],
+    added: []
 }
-
-function downloadWallpaper(method, options) {
-    var id = options.id || (Math.random() + 1).toString(36).substr(2, 10);
-    var size = config.width + '/' + config.height;
-    var path = __dirname + '/dl/' + id;
-    var base = 'https://unsplash.it/';
-
-    if(options && options.grayscale === true) {
-        base += 'g/';
-        path += '-grey';
-    }
-
-    if(method === 'random') {
-        var link = base + size + '/?random';
-    } else if(method === 'specific') {
-        var link = base + size + '?image=' + options.id;
-    } else {
-        return console.error('Invalid method');
-    }
-
-    if(options && options.blur === true) {
-        link += '&blur';
-        path += '-blur';
-    }
-
-    fs.exists(path, function(exists) {
-        if(exists === true) {
-            setWallpaper(path);
-        } else {
-            request(link)
-            .pipe(fs.createOutputStream(path)
-                .on('finish', function() {
-                    setWallpaper(path);
-                }))
-            .on('error', function(err) {
-                console.error(err);
-            });
-        }
-    });
-}
-
-function setWallpaper(path) {
-    wallpaper.set(path, function(err) {
-        if(!err) {
-            return console.log('Success');
-        } else {
-            return console.error(err);
-        }
-    })
-}
-
-function getWallpaper() {
-    wallpaper.get(function(err, path) {
-        if(!err) {
-            console.log(path);
-            return path
-        } else {
-            console.error(err);
-            return false;
-        }
-    });
-}
-
-function checkConnection() {
-    config.online = navigator.onLine;
-    return navigator.onLine;
-};
 
 
 // Binds
+$('#schedule').on('click', function() {
+    schedule.startSchedule(2, 's');
+});
+
+$('#favorite').on('click', function() {
+    console.log(user.favorites);
+});
+
+$('#settings').on('click', function() {
+    console.log('Settings');
+});
+
 function bindClicks() {
     $('.action').on('click', function() {
+        var id = $(this).parent().parent().attr('data-id');
         switch($(this).data('action')) {
             case 'set':
-                downloadWallpaper('specific', {id:$(this).data('id')});
+                if(wallpaper.checkWallpaper(id) === true) {
+                    wallpaper.setWallpaper(id);
+                } else {
+                    wallpaper.downloadWallpaper({
+                        method: 'specific',
+                        id: id,
+                        set: true
+                    });
+                }
                 break;
             case 'add':
-                console.log('add');
+                if(wallpaper.checkWallpaper(id) === true) {
+                    user.favorites.push(id);
+                } else {
+                    wallpaper.downloadWallpaper({
+                        method: 'specific',
+                        id: id
+                    });
+                }
                 break;
             case 'fav':
-                console.log('fav');
                 break;
         }
     })
@@ -127,8 +70,12 @@ function bindClicks() {
 
 
 // Intern
-document.getElementById('subtitle').innerHTML = ' | ' + superb() + ' wallpapers';
-window.addEventListener('offline',  checkConnection);
-window.addEventListener('online',  checkConnection);
-checkConnection();
-getList();
+function startApp() {
+    document.getElementById('subtitle').innerHTML = ' | ' + superb() + ' wallpapers';
+    window.addEventListener('offline',  utils.checkConnection);
+    window.addEventListener('online',  utils.checkConnection);
+    utils.checkConnection();
+    utils.getList();
+}
+
+startApp();

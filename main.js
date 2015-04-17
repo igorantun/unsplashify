@@ -24,7 +24,7 @@ app.on('ready', function() {
 
     mainWindow.webContents.on('did-finish-load', function() {
         mainWindow.setMinimumSize(800, 400);
-        //mainWindow.openDevTools();
+        mainWindow.openDevTools();
         mainWindow.show();
         mainWindow.focus();
     });

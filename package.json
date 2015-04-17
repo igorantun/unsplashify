@@ -1,6 +1,6 @@
 {
   "name": "Unsplashify",
-  "version": "0.1.0",
+  "version": "0.5.27",
   "description": "Use images from Unsplash on your desktop",
   "main": "main.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "wallpaper": "~1.0.0",
     "request": "~2.55.0",
     "fs": "0.0.2",
-    "fs-extra": "~0.18.0"
+    "fs-extra": "~0.18.0",
+    "later": "~1.1.6"
   }
 }
