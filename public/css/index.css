@@ -1,14 +1,15 @@
 #subtitle {
-    -webkit-user-select: none;
     font-weight: normal;
     font-size: 10pt;
-    cursor: default;
 }
 
 .title {
     font-size: 20pt!important;
-    -webkit-user-select: none;
     margin-left: 15px;
+}
+
+.unselectable {
+    -webkit-user-select: none;
     cursor: default;
 }
 
@@ -52,4 +53,5 @@
 
 #loading {
     display: none;
+    margin-top: 200px;
 }
