@@ -25,15 +25,16 @@ var user = {
 
 
 // Binds
-$('#schedule').on('click', function() {
+$('#menu-schedule').on('click', function() {
+    console.log('Schedule');
     schedule.startSchedule(2, 's');
 });
 
-$('#favorite').on('click', function() {
-    console.log(user.favorites);
+$('#menu-favorite').on('click', function() {
+    console.log('Favorites: ' + user.favorites);
 });
 
-$('#settings').on('click', function() {
+$('#menu-settings').on('click', function() {
     console.log('Settings');
 });
 
@@ -76,6 +77,9 @@ function startApp() {
     window.addEventListener('online',  utils.checkConnection);
     utils.checkConnection();
     utils.getList();
+
+    $('#schedule').hide();
+    $('#settings').hide();
 }
 
 startApp();
