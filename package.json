@@ -1,6 +1,6 @@
 {
   "name": "Unsplashify",
-  "version": "0.5.28",
+  "version": "0.5.29",
   "description": "Use images from Unsplash on your desktop",
   "main": "main.js",
   "scripts": {

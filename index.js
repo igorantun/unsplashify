@@ -20,17 +20,33 @@ var user = {
     name: null,
     timer: null,
     favorites: [],
+    scheduled: [],
     added: []
+}
+
+
+// Functions
+function checkAdd(object, id) {
+    if(user[object].indexOf(id) === -1) {
+        user[object].push(id);
+
+        if(wallpaper.checkWallpaper(id) === false) {
+            wallpaper.downloadWallpaper({
+                method: 'specific',
+                id: id
+            });
+        }
+    }
 }
 
 
 // Binds
 $('#menu-schedule').on('click', function() {
-    console.log('Schedule');
     schedule.startSchedule(2, 's');
+    console.log('Scheduled: ' + user.scheduled);
 });
 
-$('#menu-favorite').on('click', function() {
+$('#menu-favorites').on('click', function() {
     console.log('Favorites: ' + user.favorites);
 });
 
@@ -53,17 +69,13 @@ function bindClicks() {
                     });
                 }
                 break;
+
             case 'add':
-                if(wallpaper.checkWallpaper(id) === true) {
-                    user.favorites.push(id);
-                } else {
-                    wallpaper.downloadWallpaper({
-                        method: 'specific',
-                        id: id
-                    });
-                }
+                checkAdd('scheduled', id);
                 break;
+
             case 'fav':
+                checkAdd('favorites', id);
                 break;
         }
     })
