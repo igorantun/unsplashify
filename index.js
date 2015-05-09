@@ -27,7 +27,8 @@ var user = {
 
 // Functions
 function checkAdd(object, id) {
-    if(user[object].indexOf(id) === -1) {
+    var index = user[object].indexOf(id);
+    if(index === -1) {
         user[object].push(id);
 
         if(wallpaper.checkWallpaper(id) === false) {
@@ -36,7 +37,13 @@ function checkAdd(object, id) {
                 id: id
             });
         }
+        // Returns true, element added
+        return true;
     }
+    // If it's already added, we remove it
+    user[object].splice(index, 1);
+    // Returns false, element removed
+    return false;
 }
 
 
@@ -71,11 +78,20 @@ function bindClicks() {
                 break;
 
             case 'add':
-                checkAdd('scheduled', id);
+                if(checkAdd('scheduled', id)){
+                    $(this).addClass("teal-text");
+                }else{
+                    $(this).removeClass("teal-text");
+                }
                 break;
 
             case 'fav':
-                checkAdd('favorites', id);
+                // Toggles a favorite and set icon color
+                if(checkAdd('favorites', id)){
+                    $(this).addClass("red-text");
+                }else{
+                    $(this).removeClass("red-text");
+                }
                 break;
         }
     })
