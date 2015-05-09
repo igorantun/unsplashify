@@ -4,6 +4,7 @@
   "description": "Use images from Unsplash on your desktop",
   "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Igor Antun",
@@ -14,5 +15,8 @@
     "fs": "0.0.2",
     "fs-extra": "~0.18.0",
     "later": "~1.1.6"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.25.3"
   }
 }
