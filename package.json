@@ -4,15 +4,23 @@
   "description": "Use images from Unsplash on your desktop",
   "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Igor Antun",
-  "license": "BSD",
+  "contributors": [
+    "Vytor Calixto <vytorcalixto@gmail.com> (https://github.com/VytorCalixto)"
+  ],
+  "license": "MIT",
   "dependencies": {
-    "wallpaper": "~1.0.0",
-    "request": "~2.55.0",
     "fs": "0.0.2",
     "fs-extra": "~0.18.0",
-    "later": "~1.1.6"
+    "later": "~1.1.6",
+    "request": "~2.55.0",
+    "superb": "^1.1.4",
+    "wallpaper": "~1.0.0"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^0.25.3"
   }
 }
