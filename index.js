@@ -1,4 +1,4 @@
-// Requires
+/* Requires */
 var display = require('screen').getPrimaryDisplay();
 var superb = require('superb');
 
@@ -7,8 +7,9 @@ var wallpaper = require('./lib/wallpaper.js');
 var schedule = require('./lib/schedule.js');
 var utils = require('./lib/utils.js');
 
+Notification.requestPermission();
 
-// Variables
+/* Variables */
 var config = {
     version: package.version,
     width: display.size.width,
@@ -25,7 +26,7 @@ var user = {
 };
 
 
-// Functions
+/* Functions */
 function checkAdd(object, id) {
     var index = user[object].indexOf(id);
 
@@ -47,7 +48,7 @@ function checkAdd(object, id) {
 }
 
 
-// Binds
+/* Binds */
 $('#menu-schedule').on('click', function() {
     schedule.startSchedule(2, 's');
     console.log('Scheduled: ' + user.scheduled);
@@ -97,7 +98,7 @@ function bindClicks() {
 }
 
 
-// Intern
+/* Internal */
 function startApp() {
     document.getElementById('subtitle').innerHTML = ' | ' + superb() + ' wallpapers';
     window.addEventListener('offline',  utils.checkConnection);

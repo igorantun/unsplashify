@@ -21,6 +21,7 @@
     "wallpaper": "~1.0.0"
   },
   "devDependencies": {
-    "electron-prebuilt": "^0.25.3"
+    "electron-debug": "^0.2.0",
+    "electron-prebuilt": "^0.30.1"
   }
 }
