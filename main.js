@@ -18,7 +18,7 @@ var iconPath = path.join(__dirname, '/public/img/logo.png');
 /* Internal */
 app.on('window-all-closed', function() {
     if(process.platform !== 'darwin') {
-        //app.quit();
+        app.quit();
     }
 });
 
@@ -49,6 +49,6 @@ app.on('ready', function() {
     });
 
     mainWindow.on('closed', function() {
-        //mainWindow = null;
+        mainWindow = null;
     });
 });

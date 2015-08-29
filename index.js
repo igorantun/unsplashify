@@ -7,7 +7,6 @@ var wallpaper = require('./lib/wallpaper.js');
 var schedule = require('./lib/schedule.js');
 var utils = require('./lib/utils.js');
 
-Notification.requestPermission();
 
 /* Variables */
 var config = {
@@ -76,7 +75,7 @@ function bindClicks() {
                         set: true
                     });
                 }
-                break;
+            break;
 
             case 'add':
                 if(checkAdd('scheduled', id)) {
@@ -84,7 +83,7 @@ function bindClicks() {
                 } else {
                     $(this).removeClass('teal-text');
                 }
-                break;
+            break;
 
             case 'fav':
                 if(checkAdd('favorites', id)) {
@@ -92,14 +91,16 @@ function bindClicks() {
                 } else {
                     $(this).removeClass('red-text');
                 }
-                break;
+            break;
         }
     })
 }
 
 
 /* Internal */
-function startApp() {
+Notification.requestPermission();
+
+(function startApp() {
     document.getElementById('subtitle').innerHTML = ' | ' + superb() + ' wallpapers';
     window.addEventListener('offline',  utils.checkConnection);
     window.addEventListener('online',  utils.checkConnection);
@@ -108,6 +109,4 @@ function startApp() {
 
     $('#schedule').hide();
     $('#settings').hide();
-}
-
-startApp();
+})();
