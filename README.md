@@ -10,7 +10,7 @@ An electron powered app to have the best from Unsplash right in your desktop. Yo
 - Get awesome pictures from Unsplash
 - List your favorite pictures and have easy and fast access to them
 
-##### To Do:
+#### To Do:
 - Easily share your favorite wallpapers with your friends
 - Have a timer to automatically change your wallpaper
 - Use images from your computer together with images from Unsplash
