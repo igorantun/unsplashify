@@ -1,5 +1,7 @@
 Unsplashify
 ===========
+>Development currently on hold.
+
 [![GitHub Stars](https://img.shields.io/github/stars/IgorAntun/unsplashify.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/IgorAntun/unsplashify.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/issues) [![Current Version](https://img.shields.io/badge/version-0.5.29-green.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/blob/master/LICENSE.md)
 
 An electron powered app to have the best from Unsplash right in your desktop. You can get the latest, a random, or even a specific picture, and have it set as your wallpaper straight away. You can also set a timer to automatically change your wallpaper for you ;)
