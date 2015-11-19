@@ -1,6 +1,6 @@
 Unsplashify
 ===========
->Development currently on hold.
+>Development currently on hold. (Should be back in a couple months - Unsplash now has its own API)
 
 [![GitHub Stars](https://img.shields.io/github/stars/IgorAntun/unsplashify.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/stargazers) [![GitHub Issues](https://img.shields.io/github/issues/IgorAntun/unsplashify.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/issues) [![Current Version](https://img.shields.io/badge/version-0.5.29-green.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify) [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/IgorAntun/unsplashify/blob/master/LICENSE.md)
 
