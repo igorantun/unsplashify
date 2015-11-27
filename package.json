@@ -7,7 +7,7 @@
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Igor Antun <igorantunc@hotmail.com> (https://github.com/IgorAntun)",
+  "author": "Igor Antun <hello@igorantun.com> (https://github.com/IgorAntun)",
   "contributors": [
     "Vytor Calixto <vytorcalixto@gmail.com> (https://github.com/VytorCalixto)"
   ],
